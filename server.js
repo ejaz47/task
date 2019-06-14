@@ -1,19 +1,22 @@
 
-
 const express = require('express');
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
 const expressValidator = require('express-validator');
-const morgan = require('morgan');
-const rfs = require('rotating-file-stream');
 const path = require('path');
-const mongoose = require('mongoose');
 
 const config = require('./config');
 const app = express();
 const auth = require('./app/auth');
 const auth_controller = require('./app/auth/auth_controller');
-const product = require('./app/product'); // Imports routes for the products
+
+const task = require('./app/task');
+
+// const product = require('./app/product'); // Imports routes for the products
+
+// const mysql = require('mysql');
+// const morgan = require('morgan');
+// const rfs = require('rotating-file-stream');
+// const mongoose = require('mongoose');
 
 if(process.env.pro){
 	config.env = 'pro';
@@ -23,17 +26,17 @@ if(process.env.pro){
 app.set('Secret', config.secret);
 
 // Set up mongoose connection
-mongoose.connect(config.env === 'dev' ? config.mongo.dev.url : config.mongo.dev.url);
-mongoose.Promise = global.Promise;
-let db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// mongoose.connect(config.env === 'dev' ? config.mongo.dev.url : config.mongo.dev.url);
+// mongoose.Promise = global.Promise;
+// let db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // Set up Mysql connection
-global.connection = mysql.createConnection(config.env === 'dev' ? config.mysql.dev : config.mysql.pro);
-connection.connect();
-setInterval(function () {
-    global.connection.query('SELECT 1');
-}, 5000);
+// global.connection = mysql.createConnection(config.env === 'dev' ? config.mysql.dev : config.mysql.pro);
+// connection.connect();
+// setInterval(function () {
+//     global.connection.query('SELECT 1');
+// }, 5000);
 
 
 //Making /public folder static (/public will be the root of all files inside public)
@@ -63,7 +66,9 @@ app.use(function(req, res, next) {
 
 //Using routers from multiple files and folders
 app.use('/auth', auth);
-app.use('/product', auth_controller.check, product);
+app.use('/task', task);
+
+// app.use('/product', auth_controller.check, product);
 // app.use('/pdf', auth_controller.check, pdf);
 // app.use('/template', auth_controller.check, template);
 // app.use('/printer', auth_controller.check, printer);

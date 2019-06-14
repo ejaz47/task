@@ -16,13 +16,13 @@ module.exports = {
 			host     : 'localhost',
 			user     : 'root',
 			password : '',
-			database : 'printer'
+			database : 'Dbname'
 		},
 		pro: {
 			host     : 'localhost',
 			user     : 'root',
 			password : '',
-			database : 'printer'
+			database : 'Dbname'
 		}
     },
 };
