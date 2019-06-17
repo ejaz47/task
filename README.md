@@ -12,7 +12,7 @@ To start app in default development mode:
 > **npm start** 
 
 
-## API Discription
+## API Description
 
 **Method**: POST
 
